@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node init"
+    "start": "node init",
+    "dev" : "babel-node app"
   },
   "author": "Jason Rabbitt",
   "license": "ISC",
