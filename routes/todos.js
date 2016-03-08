@@ -1,39 +1,44 @@
 'use strict';
 
 import express from 'express';
+import Todo from '../lib/todos'
 
 const { Router } = express;
 const todosRouter = new Router();
 
-const todos = [];
-
 todosRouter.get('/', (req, res, next) => {
-  res.json(todos);
-});
+  Todo.find((err,todos) => {
+    if (err) return next(err)
+    res.json(todos)
+  })
+})
 
 todosRouter.post('/', (req, res, next) => {
-
-  if (typeof req.body.name !== 'string') {
-    return res.status(400).send('You must include a `name` field');
-  }
-  if (typeof req.body.completed !== 'boolean') {
-    req.body.completed = (req.body.completed === 'true') ? true : false;
-  }
-  let todo = {
-    name: req.body.name,
-    completed: req.body.completed
-  }
-  todos.push(todo);
-  res.json(todo);
-});
+  Todo.create(req.body, (err, todo) => {
+    if (err) return next(err)
+    res.status(201).json(todo)
+  })
+})
 
 todosRouter.get('/:id', (req, res, next) => {
-  let todo = todos[req.params.id];
-  if (!todo) {
-    return res.sendStatus(404);
-    return res.status(404).send('Todo not found with given id');
-  }
-  res.json(todo);
-});
+  Todo.findOne(req.params.id, (err, todo) => {
+    if (err) return next(err)
+    if(!todo) return res.sendStatus(404)
+    res.json(todo)
+  })
+})
 
+todosRouter.put('/:id', (req, res, next) => {
+  Todo.update(req.params.id, req.body, (err, todo) => {
+    if (err) return next(err)
+    res.json(todo)
+  })
+})
+
+todosRouter.delete('/:id', (req, res, next) => {
+  Todo.delete(req.params.id, (err) => {
+    if (err) return next(err)
+    res.sendStatus(204)
+  })
+})
 export default todosRouter;
