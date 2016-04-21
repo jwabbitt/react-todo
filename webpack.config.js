@@ -1,5 +1,7 @@
 var path = require('path');
 
+var config = require('config')
+
 module.exports = {
   entry: './client/entry.js',
   output: {
@@ -18,7 +20,23 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
+      },
+      {
+        test: /\.css$/,
+        loader: `style!css?${[
+          'sourceMap',
+          'modules',
+          'importLoaders=1',
+          'localIndentName=[name]__[local]__[hash:base64:5]'
+        ].join('&')}`,
+        exclude: /node_modules/
       }
     ]
+  },
+  devServer: {
+    proxy: {
+      '**': `http://localhost:${config.get('port')}`
+    }
   }
+
 };

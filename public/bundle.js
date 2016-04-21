@@ -28816,6 +28816,7 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_AddTodoContainer2.default, null),
+	        _react2.default.createElement(_Filters2.default, null),
 	        _react2.default.createElement(_FilteredTodoList2.default, null)
 	      );
 	    }

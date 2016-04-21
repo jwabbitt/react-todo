@@ -8,9 +8,10 @@
     "watch": "nodemon init",
     "dev": "babel-node app",
     "devwatch": "nodemon --exec babel-node -- app",
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "build": "webpack",
-    "build-watch": "webpack-dev-server --inline --content-base public/"
+    "build-watch": "webpack-dev-server --inline --content-base public/",
+    "all": "npm run watch & npm run build-watch"
   },
   "author": "Jason Rabbitt",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "body-parser": "^1.15.0",
     "config": "^1.19.0",
     "express": "^4.13.4",
+    "mongoose": "^4.4.12",
     "react-redux": "^4.4.1",
     "redux": "^3.3.1",
     "redux-thunk": "^2.0.1"
@@ -33,10 +35,12 @@
     "babel-register": "^6.7.2",
     "bluebird": "^3.3.4",
     "chai": "^3.5.0",
+    "css-loader": "^0.23.1",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "style-loader": "^0.13.1",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.0.0",
     "webpack": "^1.12.14"
