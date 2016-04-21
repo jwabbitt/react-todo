@@ -1,5 +1,5 @@
 var path = require('path');
-
+var webpack = require('webpack')
 var config = require('config')
 
 module.exports = {
@@ -12,6 +12,10 @@ module.exports = {
   plugins: [],
   module: {
     loaders: [
+      {
+        test: /\.js$/,
+        loader: 'transform?envify'
+      },
       {
         test: /\.js$/, // Telling webpack to use files that match this pattern
         loader: 'babel', // Uses the module `babel-loader`
@@ -39,4 +43,12 @@ module.exports = {
     }
   }
 
-};
+}
+
+if (process.env.NODE_ENV === 'proudction') {
+  module.exports.plugins.push(new webpack.optimize.UglifyJSPlugin({
+    compress: {
+      warnings: false
+    }
+  }))
+}
